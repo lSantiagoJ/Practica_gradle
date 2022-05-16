@@ -1,5 +1,20 @@
 plugins {
     id "de.undercouch.download" version "4.1.1"
+    
+}
+
+// Herencia en Gradle
+class MyDownload extends DefaultTask {
+    @Input
+    String sourceUrl
+
+    @OutputFile
+    File target
+
+    @TaskAction
+    void download(){  //usando Apache Ant
+        ant.get(src: sourceUrl, dest: target)
+    }
 }
 
 task someTask{
@@ -21,6 +36,24 @@ task copiar(type: Copy, dependsOn: crearDirec){
     from 'prueba1'
     into 'Carpeta_para_zipear/aqui'
     println("Se copiado archivo prueba.bat")
+}
+
+/*task zipeame(type: Zip, dependsOn: copiar){
+    from 'prueba1/prueba.bat'
+    destinationDir 'Carpeta_para_zipear'
+    archiveName 'Me_zipeaste.zip'
+    
+}*/
+
+task downloadFile2(type: MyDownload) {
+    sourceUrl ='https://avatars.githubusercontent.com/u/583231?v=4'
+    target new File('./Carpeta_para_zipear2/logo.svg')
+    doFirst{
+        println 'Download in process...'
+    }
+    doLast{
+        println 'Download Completed'
+    }
 }
 
 
