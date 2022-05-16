@@ -1,0 +1,26 @@
+plugins {
+    id "de.undercouch.download" version "4.1.1"
+}
+
+task someTask{
+    println("Hola")
+}
+
+/*task descargar doLast{ new File('/c/Users/santi/OneDrive/Escritorio')
+if (!f.exists()) {
+    new URL('https://avatars.githubusercontent.com/u/583231?v=4').withInputStream{ i -> f.withOutputStream{ it << i }}
+}
+}*/
+
+task crearDirec{
+new File('Carpeta_para_zipear').mkdirs()
+println("Se ha creado carpeta para zipear")
+}
+
+task copiar(type: Copy, dependsOn: crearDirec){
+    from 'prueba1'
+    into 'Carpeta_para_zipear/aqui'
+    println("Se copiado archivo prueba.bat")
+}
+
+
